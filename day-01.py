@@ -25,6 +25,13 @@ for data in converted_data:
         grouped_data.append(total)
         total = 0
 
+# Part 1:
+# print(max(grouped_data))
 
-print(max(grouped_data))
+# Part 2:
+sorted_data = sorted(grouped_data)
 
+top_3_total = sorted_data[-1] + sorted_data[-2] + sorted_data[-3]
+
+
+print(top_3_total)

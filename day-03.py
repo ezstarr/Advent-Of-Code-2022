@@ -30,11 +30,52 @@ dict_of_priorities = {'a': 1, 'b': 2, 'c': 3, 'd': 4, 'e': 5, 'f': 6, 'g': 7, 'h
 
 
 for each_rucksack in all_rucksacks:
-    for item in each_rucksack:
-        half = len(each_rucksack) // 2
-        if item in each_rucksack[:half] and item in each_rucksack[half:]:
+    half = len(each_rucksack) // 2
+    for item in each_rucksack[:half]:
+        if item in each_rucksack[half:]:
             value = dict_of_priorities[item]
     sum_of_priorities += value
 
-print(sum_of_priorities)
+# print(sum_of_priorities)
+
+# Part 2:
+"""
+Elves in groups of 3
+One badge - only item carried by all 3, nothing else is carried by all 3
+
+if I find out how may groups there are...
+
+
+"""
+
+badge_priorities = 0
+groups = []
+index = 0
+
+
+new_list = []
+for i in range(0, len(all_rucksacks), 3):
+    a_group = all_rucksacks[i:i+3] # a group
+
+
+    elf1 = a_group[0]
+    elf2 = a_group[1]
+    elf3 = a_group[2]
+    for elf in a_group:
+
+        for x in elf:
+            if x in elf1 and x in elf2 and x in elf3:
+                badge = x
+                badge_value = dict_of_priorities[badge]
+    badge_priorities += badge_value
+
+print(badge_priorities)
+
+
+
+
+groups = ['abc907', 'daf1231', 'gea277']
+
+pencils = ['brown', 'green', 'brown']
+
 

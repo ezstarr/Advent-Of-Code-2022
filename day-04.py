@@ -15,24 +15,54 @@ fake_pairs = [
 
 total = 0
 
-for str_pair in all_pairs:
-    sections = []
-    split_pair = str_pair.split(",")
-    # print(f"split pair {split_pair}")
-    for pair in split_pair:
-        section = pair.split("-", 2)
-        sections.extend(section)
-    print(sections)
-    a_start = int(sections[0])
-    a_end = int(sections[1])
-    b_start = int(sections[2])
-    b_end = int(sections[3])
-    # print(sections[0][0])
-    if ((a_start <= b_start) and (a_end >= b_end)) or \
-            ((a_start >= b_start) and (a_end <= b_end)):
-        total += 1
-        print("added one")
+# for str_pair in all_pairs:
+#     sections = []
+#
+#     split_pair = str_pair.split(",")
+#
+#     # print(f"split pair {split_pair}")
+#     for pair in split_pair:
+#         section = pair.split("-", 2)
+#         sections.extend(section)
+#     # print(sections)
+#     a_start = int(sections[0])
+#     a_end = int(sections[1])
+#     b_start = int(sections[2])
+#     b_end = int(sections[3])
+
+    # if one embodies another
+    # if ((a_start <= b_start) and (a_end >= b_end)) or \
+    #         ((a_start >= b_start) and (a_end <= b_end)):
+    #     total += 1
+
+
 # print(total)
 print(total)
 # section = [pair for pair in split_pair.split("-", 2)]
 # print(f"section {section}")
+
+# Part 2:
+len_all_pairs = len(all_pairs)
+no_overlap = 0
+
+for str_pair in all_pairs:
+    sections = []
+
+    split_pair = str_pair.split(",")
+
+    # print(f"split pair {split_pair}")
+    for pair in split_pair:
+        section = pair.split("-", 2)
+        sections.extend(section)
+    # print(sections)
+    a_start = int(sections[0])
+    a_end = int(sections[1])
+    b_start = int(sections[2])
+    b_end = int(sections[3])
+    if (a_end < b_start) or (b_end < a_start):
+        no_overlap += 1
+
+overlaps = len_all_pairs - no_overlap
+
+print(overlaps)
+

@@ -56,20 +56,12 @@ index = 0
 new_list = []
 for i in range(0, len(all_rucksacks), 3):
     a_group = all_rucksacks[i:i+3] # a group
+                                                                    # for elf in a_group:
+    common_character = (set(a_group[0]) & set(a_group[1]) & set(a_group[2]))                  #             if x in elf
+    print(common_character)
 
 
-    elf1 = a_group[0]
-    elf2 = a_group[1]
-    elf3 = a_group[2]
-    for elf in a_group:
-
-        for x in elf:
-            if x in elf1 and x in elf2 and x in elf3:
-                badge = x
-                badge_value = dict_of_priorities[badge]
-    badge_priorities += badge_value
-
-print(badge_priorities)
+# print(badge_priorities)
 
 
 

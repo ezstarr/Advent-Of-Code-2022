@@ -8,14 +8,15 @@ with open('day-07-input.txt') as file:
 
 output_lines = list(map(str.strip, ex_output))
 
-cur_dir = ["/"]  # each index is a directory, gets added on line 26 ["/", "a", "e"]
+cur_dir: list[str] = ["/"]  # list of directory names
 dir_sizes = {tuple(cur_dir): 0}  # directory->key, filesize-> value
 
 for line in output_lines:
     line_list = line.split()
-    # print(line_list)
+    # populates a directory with directory sizes,
+    # by going through a set of commands, line by line
 
-    # get the current directory, following commands
+    # update current directory
     if line_list[1] == 'cd':
         cur_arg = line_list[2]
         if cur_arg == "/":
@@ -25,11 +26,11 @@ for line in output_lines:
         else:
             cur_dir.append(cur_arg)
 
-    # the file size, to add to current directory
+    # adds file size to relevant directories in dir_sizes
     if line_list[0].isdigit():
         filesize = int(line_list[0])
 
-        for i in range(len(cur_dir)):  # [('/'), ('a')]
+        for i in range(len(cur_dir)):  # cur_dir -> list[str]
 
             current_path = tuple(cur_dir[:i+1])
             # i = 0, ('/',)
@@ -40,9 +41,6 @@ for line in output_lines:
             else:
                 dir_sizes[current_path] += filesize
 
-
-
-
 sum_dirs_under100k = 0
 for k, v in dir_sizes.items():
     if v <= 100_000:
@@ -51,14 +49,8 @@ for k, v in dir_sizes.items():
 print(cur_dir)
 print(dir_sizes)
 
-
-
-# Part 2
+# ====== Part 2
 # Find the smallest directory I could delete, that would free up 30_000_000 sizes
-
-# Find sum of all directories:
-
-
 
 # difference = (70_000_000 - dir_sizes[('/',)])
 root_size = dir_sizes[('/',)]
@@ -81,6 +73,4 @@ for k,v in dir_sizes.items():
 
 smallest_dir_size_i_can_delete = min(potential_sizes)
 
-
 print(smallest_dir_size_i_can_delete)
-

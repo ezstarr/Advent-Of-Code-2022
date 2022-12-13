@@ -1,3 +1,5 @@
+from typing import Any
+
 with open('day-08-example.txt') as file:
     tree_grid = [line.strip() for line in file.readlines()]
 
@@ -51,29 +53,45 @@ b_check = tree[(-1)][2] <= tree[(-1)-2][2] <= tree[2][2]
 
 
 def check_top(matrix, row, col):
-    i = 1
-    up_row = (row - i)
+    check_row = 0
     cur = tree_array[row][col]
-    up = tree_array[up_row][col]
-    print(f"cur: {cur}, up: {up}")
+    top = tree_array[check_row][col]
+    print(f"cur: {cur}, top: {top}")
 
-    while up_row > 0:
-        if cur >= up:
-            print(f" cur >= up: {cur >= up}")
-            print(f" -first up_row: {up_row}")
-            i += 1
-            up_row = row - i
-            print(f" -next up_row: {up_row}")
-            print(f"  i equals {i}, row equals: {row}")
-            up = tree_array[up_row][col]
-            print(f"   cur: {cur}, up: {up}")
-            print(f"    cur >= up: {cur >= up}")
-        if up_row == 0:
-            visible = True
-            print(visible)
-        else:
-            print("not visible")
+    blocks_tree = 0
 
+    if row == 0:
+        blocks_tree += 0
+
+
+    # GET YES - VISIBLE, if cur - top > 0 --> add nothing
+    # GET NO - NOT VISIBLE, if cur - top < 0 --> add 1
+    while check_row >= 0 and check_row != row:
+
+        if cur > top:
+            # Current row is taller than check_row
+            # blocks_tree += 0
+
+            blocks_tree += 0
+
+            check_row += 1
+
+            if check_row == row:
+                return blocks_tree
+
+            top = tree_array[check_row][col]
+
+            blocks_tree += 0
+
+
+        if top >= cur:
+            blocks_tree += 1
+            return blocks_tree
+
+        if check_row == row:
+            return blocks_tree
+
+    return blocks_tree
 
 
 
@@ -91,4 +109,4 @@ def check_bottom(matrix, col):
 
 # print(tree_array[(-1)-2][2] == tree_array[2][2])
 
-print(check_top(tree_array, 2, 0))
+print(check_top(tree_array, 1, 1))

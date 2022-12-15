@@ -3,10 +3,6 @@ from typing import Any
 with open('day-08-example.txt') as file:
     tree_grid = [line.strip() for line in file.readlines()]
 
-row = 0
-col = 0
-visible_tree_count = 0
-
 tree_array = []
 
 for tree_row in tree_grid:
@@ -18,10 +14,6 @@ for tree_row in tree_grid:
     tree_array.append(row_list)
 
 print(*tree_array, sep="\n")
-
-
-def column(matrix, col):
-    return [tree_row[col] for tree_row in matrix]
 
 
 print("================")
@@ -59,28 +51,22 @@ def check_top(matrix, row, col):
 
     blocks_tree = 0
 
-    if row == 0:
-        blocks_tree += 0
+    if row == check_row:
+        return blocks_tree
+    if cur <= top:
+        blocks_tree += 1
+        return blocks_tree
 
     # GET YES - VISIBLE, if cur - top > 0 --> add nothing
     # GET NO - NOT VISIBLE, if cur - top < 0 --> add 1
-    while check_row >= 0 and check_row != row:
+    while cur - top > 0 and check_row != row:
 
-        if cur > top:
-            # Current row is taller than check_row
-            # blocks_tree += 0
+        check_row += 1
 
-            blocks_tree += 0
+        if check_row == row:
+            return blocks_tree
 
-            check_row += 1
-
-            if check_row == row:
-                return blocks_tree
-
-            top = tree_array[check_row][col]
-
-            blocks_tree += 0
-
+        top = tree_array[check_row][col]
 
         if top >= cur:
             blocks_tree += 1
@@ -93,33 +79,35 @@ def check_top(matrix, row, col):
 
 
 def check_right(matrix, row, col):
-    check_col = (len(tree_row)-1)
+    check_col = (len(tree_row) - 1)
     cur = tree_array[row][col]
     right = tree_array[row][check_col]
 
     blocks_tree = 0
 
     if col == check_col:
-        blocks_tree += 0
+        return blocks_tree
+
+    if cur <= right:
+        blocks_tree += 1
+        return blocks_tree
 
     while cur - right > 0 and check_col != col:
 
-        if cur > right:
-            blocks_tree += 0
-            check_col -= 1
-
-            if check_col == col:
-                return blocks_tree
-
-            right = tree_array[row][check_col]
-            blocks_tree += 0
-
-        if right >= cur:
-            blocks_tree += 1
-            return blocks_tree
+        check_col -= 1
 
         if check_col == col:
             return blocks_tree
+
+        right = tree_array[row][check_col]
+
+        if cur <= right:
+            blocks_tree += 1
+            return blocks_tree
+
+        if col == check_col:
+            return blocks_tree
+
 
     return blocks_tree
 
@@ -132,19 +120,16 @@ def check_left(matrix, row, col):
     blocks_tree = 0
 
     if col == check_col:
-        blocks_tree += 0
+        return blocks_tree
+
+    elif left >= cur:
+        blocks_tree += 1
+        return blocks_tree
 
     while cur - left > 0 and check_col != col:
 
-        if cur > left:
-            blocks_tree += 0
-            check_col += 1
-
-            if check_col == col:
-                return blocks_tree
-
-            left = tree_array[row][check_col]
-            blocks_tree += 0
+        check_col += 1
+        left = tree_array[row][check_col]
 
         if left >= cur:
             blocks_tree += 1
@@ -157,26 +142,27 @@ def check_left(matrix, row, col):
 
 
 def check_bottom(matrix, row, col):
-    check_row = len(tree_array)-1
+    check_row = len(tree_array) - 1
     cur = tree_array[row][col]
     bottom = tree_array[check_row][col]
 
     blocks_tree = 0
 
     if row == check_row:
-        blocks_tree += 0
+        return blocks_tree
+
+    if cur <= bottom:
+        blocks_tree += 1
+        return blocks_tree
 
     while cur - bottom > 0 and check_row != row:
 
-        if cur > bottom:
-            blocks_tree += 0
-            check_row -= 1
+        check_row -= 1
 
-            if check_row == row:
-                return blocks_tree
+        if check_row == row:
+            return blocks_tree
 
-            bottom = tree_array[check_row][col]
-            blocks_tree += 0
+        bottom = tree_array[check_row][col]
 
         if bottom >= cur:
             blocks_tree += 1
@@ -188,4 +174,66 @@ def check_bottom(matrix, row, col):
     return blocks_tree
 
 
-for
+num_visible_trees = 0
+
+for row, tree_row in enumerate(tree_array):
+    for col, tree in enumerate(tree_row):
+        num_blocks = 0
+        print(f"==== row: {row}, col: {col}")
+        if check_top(tree_array, row, col) == 0:
+            print(check_top(tree_array, row, col))
+            print(f"    top visible")
+        else:
+            print(check_top(tree_array, row, col))
+            print(f"    top blocked")
+            num_blocks += 1
+
+        if check_right(tree_array, row, col) == 0:
+            print(check_right(tree_array, row, col))
+            print(f"    right visible")
+        else:
+            print(check_right(tree_array, row, col))
+            print(f"    right blocked")
+            num_blocks += 1
+
+        if check_left(tree_array, row, col) == 0:
+            print(check_left(tree_array, row, col))
+            print(f"    left visible")
+        else:
+            print(check_left(tree_array, row, col))
+            print(f"     left blocked")
+            num_blocks += 1
+
+        if check_bottom(tree_array, row, col) == 0:
+            print(check_bottom(tree_array, row, col))
+            print(f"    bottom visible")
+        else:
+            print(check_bottom(tree_array, row, col))
+            print(f"     bottom blocked")
+            num_blocks += 1
+
+        # if (
+        #         check_top(tree_array, row, col) == 0 or
+        #         check_right(tree_array, row, col) == 0 or
+        #         check_left(tree_array, row, col) == 0 or
+        #         check_bottom(tree_array, row, col) == 0
+        #         ):
+        print(f"num_blocks: {num_blocks}")
+        if num_blocks < 4:
+            num_visible_trees += 1
+
+
+print(num_visible_trees)
+
+
+row = 1
+col = 3
+four_checks = (check_top(tree_array, row, col) == 0  # or
+               # check_right(tree_array, row, col) == 0 or
+               # check_left(tree_array, row, col) == 0 or
+               # check_bottom(tree_array, row, col) == 0
+               )
+print(four_checks)
+
+print("================")
+print(*tree_array, sep="\n")

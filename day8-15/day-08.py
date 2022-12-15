@@ -1,4 +1,5 @@
-with open('day-08-input.txt') as file:
+with open('day-08-input'
+          '.txt') as file:
     tree_grid = [line.strip() for line in file.readlines()]
 
 tree_array = []
@@ -26,18 +27,17 @@ def check_top(matrix, row, col):
 
     if check_row == row:
         return blocks_tree
+
     if cur <= top:
         blocks_tree += 1
         return blocks_tree
 
     while cur - top > 0 and check_row != row:
-
         check_row += 1
+        top = tree_array[check_row][col]
 
         if check_row == row:
             return blocks_tree
-
-        top = tree_array[check_row][col]
 
         if top >= cur:
             blocks_tree += 1
@@ -63,19 +63,17 @@ def check_right(matrix, row, col):
         return blocks_tree
 
     while cur - right > 0 and check_col != col:
-
         check_col -= 1
+        right = tree_array[row][check_col]
 
         if check_col == col:
             return blocks_tree
-
-        right = tree_array[row][check_col]
 
         if cur <= right:
             blocks_tree += 1
             return blocks_tree
 
-        if col == check_col:
+        if check_col == col:
             return blocks_tree
 
     return blocks_tree
@@ -88,17 +86,19 @@ def check_left(matrix, row, col):
 
     blocks_tree = 0
 
-    if col == check_col:
+    if check_col == col:
         return blocks_tree
 
-    elif left >= cur:
+    if left >= cur:
         blocks_tree += 1
         return blocks_tree
 
     while cur - left > 0 and check_col != col:
-
         check_col += 1
         left = tree_array[row][check_col]
+
+        if check_col == col:
+            return blocks_tree
 
         if left >= cur:
             blocks_tree += 1
@@ -117,7 +117,7 @@ def check_bottom(matrix, row, col):
 
     blocks_tree = 0
 
-    if row == check_row:
+    if check_row == row:
         return blocks_tree
 
     if cur <= bottom:
@@ -167,59 +167,4 @@ print(are_blocked)
 visible_trees = num_total_trees - are_blocked
 print(visible_trees)
 
-# if check_top(tree_array, row, col) == 0:
-#     pass
-# else:
-#     # print(check_top(tree_array, row, col))
-#     # print(f"    top blocked")
-#     num_blocks += 1
-#
-# if check_right(tree_array, row, col) == 0:
-#     pass
-#     # print(check_right(tree_array, row, col))
-#     # print(f"    right visible")
-# else:
-#     # print(check_right(tree_array, row, col))
-#     # print(f"    right blocked")
-#     num_blocks += 1
-#
-# if check_left(tree_array, row, col) == 0:
-#     pass
-#     # print(check_left(tree_array, row, col))
-#     # print(f"    left visible")
-# else:
-#     # print(check_left(tree_array, row, col))
-#     # print(f"     left blocked")
-#     num_blocks += 1
-#
-# if check_bottom(tree_array, row, col) == 0:
-#     pass
-#     # print(check_bottom(tree_array, row, col))
-#     # print(f"    bottom visible")
-# else:
-#     # print(check_bottom(tree_array, row, col))
-#     # print(f"     bottom blocked")
-#     num_blocks += 1
-#
-# # if (
-# #         check_top(tree_array, row, col) == 0 or
-# #         check_right(tree_array, row, col) == 0 or
-# #         check_left(tree_array, row, col) == 0 or
-# #         check_bottom(tree_array, row, col) == 0
-# #         ):
-# # print(f"num_blocks: {num_blocks}")
-# if num_blocks < 4:
-#     num_visible_trees += 1
 
-
-# row = 1
-# col = 3
-# four_checks = (check_top(tree_array, row, col) == 0  # or
-#                # check_right(tree_array, row, col) == 0 or
-#                # check_left(tree_array, row, col) == 0 or
-#                # check_bottom(tree_array, row, col) == 0
-#                )
-# print(four_checks)
-#
-# print("================")
-# print(*tree_array, sep="\n")

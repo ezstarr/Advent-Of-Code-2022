@@ -1,4 +1,4 @@
-with open('day-08-example.txt') as file:
+with open('day-08-input.txt') as file:
     tree_grid = [line.strip() for line in file.readlines()]
 
 tree_array = []
@@ -163,101 +163,96 @@ print(visible_trees)
 
 # ==================== Part 2 ===========================
 
+
 def get_top_view(matrix, row, col):
-    up_row = row - 1
-    cur = tree_array[row][col]
-    up_tree = tree_array[up_row][col]
-    print(f"cur: {cur}, up_tree: {up_tree}")
+    view = 0
+    for i in range(1, len(tree_array)+1):
+        top_row = row - i
+        cur = tree_array[row][col]
+        top_tree = tree_array[top_row][col]
 
-    if up_tree >= cur:
-        return 0
+        if top_row == -1:
+            return view
 
-    while up_tree < cur:
-        up_row -= 1
-        up_tree = tree_array[up_row][col]
+        view += 1
 
-        if up_tree < cur:
-            up_row -= 1
-            up_tree = tree_array[up_row][col]
-
-        if up_tree <= cur:
-            return row - up_row
+        if top_row == -1 or top_tree >= cur:
+            return view
 
 
-# print(f"get top view: {get_top_view(tree_array, 4, 3)}")
 
 def get_right_view(matrix, row, col):
-    right_col = col + 1
-    cur = tree_array[row][col]
-    right_tree = tree_array[row][right_col]
-    print(f"cur: {cur}, right_tree: {right_tree}")
+    view = 0
+    for i in range(1, len(tree_row)+1):
+        right_col = col + i
+        if right_col > len(tree_row) - 1:
+            return view
 
-    if right_tree >= cur:
-        return 0
-
-    while right_tree < cur:
-        right_col += 1
+        cur = tree_array[row][col]
         right_tree = tree_array[row][right_col]
-        right_col += 1
+
+        view += 1
 
         if right_tree >= cur:
-            return right_col - col
+            return view
 
-        return right_col - col
+        if right_col == len(tree_array)-1:
+            return view
 
-
-print(f"get right view: {get_right_view(tree_array, 2, 0)}")
 
 def get_left_view(matrix, row, col):
-    up_row = row - 1
-    cur = tree_array[row][col]
-    up_tree = tree_array[up_row][col]
-    print(f"cur: {cur}, up_tree: {up_tree}")
+    view = 0
+    for i in range(1, len(tree_row)+1):
+        left_col = col - i
 
-    if up_tree >= cur:
-        return 0
+        if left_col < 0:
+            return view
 
-    while up_tree < cur:
-        up_row -= 1
-        up_tree = tree_array[up_row][col]
+        cur = tree_array[row][col]
+        left_tree = tree_array[row][left_col]
 
-        if up_tree < cur:
-            up_row -= 1
-            up_tree = tree_array[up_row][col]
+        view += 1
 
-        if up_tree <= cur:
-            return row - up_row
+        if left_tree >= cur or left_col < 0:
+            return view
 
 
 def get_bottom_view(matrix, row, col):
-    up_row = row - 1
-    cur = tree_array[row][col]
-    up_tree = tree_array[up_row][col]
-    print(f"cur: {cur}, up_tree: {up_tree}")
+    view = 0
+    for i in range(1, len(tree_array)):
+        bottom_row = row + i
 
-    if up_tree >= cur:
-        return 0
+        if bottom_row > len(tree_array) - 1:
+            return view
 
-    while up_tree < cur:
-        up_row -= 1
-        up_tree = tree_array[up_row][col]
+        cur = tree_array[row][col]
+        bottom_tree = tree_array[bottom_row][col]
 
-        if up_tree < cur:
-            up_row -= 1
-            up_tree = tree_array[up_row][col]
+        view += 1
 
-        if up_tree <= cur:
-            return row - up_row
+        if bottom_row > len(tree_array) - 1 or bottom_tree >= cur:
+            return view
+
+all_scores = []
 
 
-for r, tree_row in enumerate(tree_array):
-    for c, tree in enumerate(tree_row):
-        top_view = 0
-        right_view = 0
-        bottom_view = 0
-        left_view = 0
+def get_views_multiplied(matrix):
+    for r, tree_row in enumerate(tree_array):
+        for c, tree in enumerate(tree_row):
+
+            top_view = get_top_view(tree_array, r, c)
+            right_view = get_right_view(tree_array, r, c)
+            bottom_view = get_bottom_view(tree_array, r, c)
+            left_view = get_left_view(tree_array, r, c)
 
 
-        tree_scenic_score = top_view * right_view * bottom_view * left_view
+            tree_scenic_score = top_view * right_view * bottom_view * left_view
 
+            # print(f"  {tree_array[r][c]}, row {r}, col {c} = {tree_scenic_score}")
 
+            all_scores.append(tree_scenic_score)
+    return all_scores
+
+get_views_multiplied(tree_array)
+
+print(max(all_scores))

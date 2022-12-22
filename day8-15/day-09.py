@@ -18,9 +18,13 @@ with open('day-09-input.txt') as file:
 
 tails_been_here = []
 
+
+
 h_position = (0, 0)
 
 t_position = (0, 0)
+
+
 
 tails_been_here.append(t_position)
 # grid = [['.' for x in range(6)] for y in range(5)]
@@ -34,7 +38,6 @@ for line in instructions:
     steps = int(split_line[1])
     direction = line[0]
 
-    tails_been_here.append(t_position)
 
 
     if direction == 'R':
@@ -43,9 +46,11 @@ for line in instructions:
 
             # Tails follows heads horizontally:
             # Removing bc Y-axis doesn't actually matter:  if h_position[1] == t_position[1]:
+
             if h_position[0] - t_position[0] >= 1:
 
                 t_position = h_position
+
                 h_position = (h_position[0] + 1, h_position[1])
                 tails_been_here.append(t_position)
 
@@ -119,16 +124,18 @@ for line in instructions:
                 print(f"  ==tails doesn't move==")
                 print(f"  new h_position: {h_position} \t new t_position: {t_position}")
 
-# Part 2:
+# Part 1:
 print(len(set(tails_been_here)))
 
-#
-# def print_tail_positions(t_pos):
-#     grid = [['.' for x in range(6)] for y in range(5)]
-#     for x, y in t_pos:
-#         grid[y][x] = 'x'
-#     for row in reversed(grid):
-#         print(''.join(row))
-#
-#
-# print(print_tail_positions(tails_been_here))
+#Cool way to print the grid for part 1
+def print_tail_positions(t_pos):
+
+    grid = [['.' for x in range(6)] for y in range(5)]
+    for x, y in t_pos:
+        grid[y][x] = 'x'
+    for row in reversed(grid):
+        print(''.join(row))
+
+
+print(print_tail_positions(tails_been_here))
+

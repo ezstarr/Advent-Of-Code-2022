@@ -7,19 +7,12 @@ with open('day-03-input.txt') as file:
 
 sum_of_priorities = 0
 
-fake_rucksacks = [
-    'vJrwpWtwJgWrhcsFMMfFFhFp',
-    'jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL',
-    'PmmdzqPrVvPwwTWBwg',
-    'wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn',
-    'ttgJtRGJQctTZtZT',
-    'CrZsJsPPZsGzwwsLwLmpwMDw'
-]
 
 l = string.ascii_lowercase
 u = string.ascii_uppercase
 both = list(l + u)
 nums = list(range(1, 53))
+
 
 all_priorities = {k: v for (k, v) in zip(both, nums)}
 dict_of_priorities = {'a': 1, 'b': 2, 'c': 3, 'd': 4, 'e': 5, 'f': 6, 'g': 7, 'h': 8, 'i': 9, 'j': 10, 'k': 11, 'l': 12,
@@ -36,38 +29,4 @@ for each_rucksack in all_rucksacks:
             value = dict_of_priorities[item]
     sum_of_priorities += value
 
-# print(sum_of_priorities)
-
-# Part 2:
-"""
-Elves in groups of 3
-One badge - only item carried by all 3, nothing else is carried by all 3
-
-if I find out how may groups there are...
-
-
-"""
-
-badge_priorities = 0
-groups = []
-index = 0
-
-
-new_list = []
-for i in range(0, len(all_rucksacks), 3):
-    a_group = all_rucksacks[i:i+3] # a group
-                                                                    # for elf in a_group:
-    common_character = (set(a_group[0]) & set(a_group[1]) & set(a_group[2]))                  #             if x in elf
-    print(common_character)
-
-
-# print(badge_priorities)
-
-
-
-
-groups = ['abc907', 'daf1231', 'gea277']
-
-pencils = ['brown', 'green', 'brown']
-
-
+print(sum_of_priorities)

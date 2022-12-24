@@ -4,6 +4,8 @@
 with open('day-02-input.txt') as file:
     guide = [line.strip() for line in file]
 
+
+# Assigns points to each shape
 rock_x = 1
 paper_y = 2
 scissors_z = 3
@@ -12,18 +14,17 @@ scissors_z = 3
 # b = paper
 # c = scissors
 
+# Assigns points to each outcome
 lose = 0
 draw = 3
 win = 6
 
-fake_guide = (
-    'A Y',  # 8 = 0 + 2 + 6
-    'B X',  # 1
-    'C Z',  # 6
-)
 
+# Score per round based on shape + outcome
+# All the scores added together
 total_score = 0
 
+# Each game's points gets added to total:
 for game in guide:
     if 'Y' in game:
         total_score += 2
@@ -36,19 +37,12 @@ for game in guide:
         total_score += 6
     elif game in ('A X', 'B Y', 'C Z'):
         total_score += 3
-    # left out because unncessary:
-    # elif game in ('B X', 'C Y', 'A Z'):
-    #     total_score += 0
 
 # Part 1:
-# print(total_score)
-# The higher the score, the closer you get to sleep to snacks as an elf.
+# Total score be if everything goes exactly according to your strategy guide
+print(total_score)
+#The higher the score, the closer you get to sleep to snacks as an elf.
 
-fake_guide = (
-    'A Y',  # 8 = 0 + 2 + 6
-    'B X',  # 1
-    'C Z',  # 6
-)
 
 # Part 2:
 # x = lose  # 0

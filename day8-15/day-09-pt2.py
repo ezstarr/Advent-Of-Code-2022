@@ -39,22 +39,6 @@ def move(lead_, follow):
 
 
 
-
-
-
-    # # KNOTS[1] only moves up if KNOTS[0] - KNOTS[1] == 2:
-    # if knots[0][1] - knots[1][1] == 2:
-    #     knots[1] = (knots[1][0] + 1, knots[1][1] + 1)
-    #
-    # if knots[0][1] - knots[1][1] == 0:
-    #     pass
-    # if knots[0][1] - knots[1][1] < 0:
-    #     knots[1] = (knots[1][0] + 1, knots[1][1] - 1)
-    #
-    # for i, knot in enumerate(knots[2:-1]):
-    # return 0, 0  # follows new position as tuple
-
-
 knot_locations = set()
 
 for line in instructions:

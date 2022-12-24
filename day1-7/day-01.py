@@ -26,12 +26,15 @@ for data in converted_data:
         total = 0
 
 # Part 1:
-# print(max(grouped_data))
+# Calories carried by the elf with the most calories
+print(max(grouped_data))
 
 # Part 2:
 sorted_data = sorted(grouped_data)
 
-top_3_total = sorted_data[-1] + sorted_data[-2] + sorted_data[-3]
 
+top_3_total = sum(sorted_data[-3:])
 
+# Combined calories carried by the top 3 elves
 print(top_3_total)
+
